@@ -1,0 +1,38 @@
+{% extends '_plantillas/_base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+
+<br>
+<div class="row">
+    <form class="col s12 l6 m10 offset-l3 offset-m1 " method="post">{% csrf_token %}
+        <div class="card">
+            <div class="card-image" style="background: url('{% static 'images/fondo3.jpg' %}') center / cover; height: 6em;">
+                <img src="{% static 'images/grid.png' %}">
+                <span class="card-title">Log in</span>
+            </div>
+            <div class="card-content">
+          
+            <div class="row">
+                <div class="input-field col s12">
+                    <input name="username" id="first_name" type="text" class="validate">
+                    <label for="first_name">Usuario</label>
+                </div>
+            </div>
+              
+            <div class="row">
+                <div class="input-field col s12">
+                    <input name="password" id="password" type="password" class="validate">
+                    <label for="password">Contraseña</label>
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </form>
+        </div>
+</div>
+  {% endblock %}      

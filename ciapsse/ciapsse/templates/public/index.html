@@ -1,0 +1,60 @@
+{% extends "_plantillas/_base.html" %}
+
+{% load staticfiles %}
+
+{% block body %}
+
+	<div class="divider"></div>
+	<div class="row container section">
+	<h2 class="header">{{contenido_general.titulo_pagina_principal}}</h2>
+	<div class="col s12"> {{contenido_general.main_pagina_principal|linebreaksbr}}</div>
+	</div>
+</div>
+
+<div class="divider"></div>
+
+
+
+<div class="slider">
+
+<ul class="slides">
+{% for im in imagenes_carrusel %}
+<li>
+	<img src="/media/{{im.imagen}}"> <!-- random image -->
+	<div class="caption center-align">
+	<h3>{{im.titulo}}</h3>
+	<h5 class="light grey-text text-lighten-3">{{im.slogan}}</h5>
+	</div>
+</li>
+{% endfor %}
+</ul>
+
+</div>
+<br><br>
+
+<div class="divider"></div>	
+
+<!-- ###########################    SECCION ARTICULOS   ########################### -->
+{% for articulo in articulos %}
+<div class="row container section">
+	<div class="row">
+	<h5 class="col s10">{{articulo.titulo|title}}</h5> <span class="col s2 blue-text text-darken-2" style="margin-top: 1em;">{{articulo.fecha}}</span>
+	</div>
+	<div class="row">
+		
+		{% if forloop.counter|divisibleby:2 %}
+		<img src="/media/{{articulo.imagen}}" class="col m4 s12"><div class="col m8 s12 ">{% autoescape off %}{{articulo.contenido|truncatewords_html:90}}{% endautoescape %}</div>
+		{% else %}
+		<div class="col m8 s12">{% autoescape off %}{{articulo.contenido|truncatewords_html:90}}{% endautoescape %}</div><img src="/media/{{articulo.imagen}}" class="col m4 s12">
+		{% endif %}
+		
+	</div>
+	<a href="{% url 'ciapsse:articulo_ver' articulo.pk %}" class="waves-effect waves-light btn {% if forloop.counter|divisibleby:2 %}right{% else %}left{% endif %} blue"><i class="material-icons right">label</i>Ver mas</a>
+</div>
+{% if not forloop.last %}
+<div class="divider"></div>	
+{% endif %}	
+{% endfor %}
+
+<!-- ###########################    /SECCION ARTICULOS   ########################### -->
+{% endblock %}

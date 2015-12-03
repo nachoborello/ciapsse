@@ -1,0 +1,139 @@
+{% extends '_plantillas/_base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+
+<div class="row container section">
+<div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3 "><a href="#pagina_principal" class="blue-text text-darken-2">Pagina Principal</a></li>
+        <li class="tab col s3 "><a href="#test1" class="blue-text text-darken-2">Articulos</a></li>
+        <li class="tab col s3"><a href="#test2" class="blue-text text-darken-2">Quienes Somos</a></li>
+        <li class="tab col s3"><a href="#test3" class="blue-text text-darken-2">Preguntas Frecuentes</a></li>
+        <div class="indicator blue" style="z-index:1"></div>
+      </ul>
+    </div>
+    <div id="test2" class="col s12">Test 2</div>
+    <div id="test3" class="col s12">Test 3</div>
+  </div>
+
+<!--###########################    TAB PAGINA PRICIPAL   ########################### -->
+<div id="pagina_principal" class="col s12">
+  <div class="row"> 
+    <h3 class="col s10">Texto Principal</h3>
+    <br>
+    <form action="{% url 'ciapsse_web:texto_pag_principal_editar' %}" method="post">{% csrf_token %}
+      <div class="input-field col s12 m5 row">
+        <input name="titulo" id="titulo" type="text" class="validate" value="{{contenido_general.titulo_pagina_principal}}">
+        <label for="titulo">Titulo</label>
+      </div>
+       
+      <div class="input-field col s12 row">
+        <textarea name="texto" id="textarea1" class="materialize-textarea" rows="10" style="resize:vertical; max-height:300px; min-height:200px; overflow-y: scroll;" >{{contenido_general.main_pagina_principal}}</textarea>
+        <label for="textarea1">Texto</label>
+      </div>
+      <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar
+        <i class="material-icons right">save</i>
+      </button>
+    </form>
+  </div>
+  <div class="row">
+    <h3 class="col s10">Carrusel</h3>
+    
+    {% for im in imagenes_carrusel %}
+    <div class="col s12 m6" >
+		<div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="/media/{{im.imagen}}" >
+      </div>
+      <div class="card-content">
+        <span class="card-title grey-text text-darken-4">{{im.titulo}}</span>
+        <p><a class="activator">{{im.slogan}}</a></p>
+      </div>
+        <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Editar<i class="material-icons right">close</i></span>
+        <form action="{% url 'ciapsse_web:carrusel_editar' im.pk %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <div class="input-field ">
+            <input name="titulo" id="titulo_{{im.pk}}" type="text" class="validate" value="{{im.titulo}}">
+            <label for="titulo_{{im.pk}}">Titulo</label>
+          </div>
+          <div class="input-field ">
+            <input name="slogan" id="slogan_{{im.pk}}" type="text" class="validate" value="{{im.slogan}}">
+            <label for="slogan_{{im.pk}}">Slogan</label>
+          </div>
+          <div class="file-field input-field ">
+          <div class="btn">
+            <span>Imagen</span>
+            <input type="file" name="imagen" accept=".jpeg, .jpg, .png">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" value="/media/{{im.imagen}}">
+          </div>
+        </div> 
+        <br><br>
+        <button class="btn waves-effect waves-light right" type="submit" name="action">Guardar
+          <i class="material-icons right">save</i>
+        </button>
+        </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+   </div> 
+</div>
+<!--###########################    /TAB PAGINA PRICIPAL   ########################### -->
+
+<!--###########################    TAB ARTICULOS   ########################### -->
+<div id="test1" class="col s12">
+  <div class="row">
+    <h3 class="col s10">Articulos</h3>
+    <div class="col s1">
+      <a href="{% url 'ciapsse_web:articulo_crear' %}" class="btn-floating btn-large waves-effect waves-light amber accent-3 " style="margin-top: 1em;"><i class="material-icons">add</i></a>
+    </div>
+    <div class="col s1">
+      <a id="toggle_borrar" class="btn-floating btn-large waves-effect waves-light amber accent-3 " style="margin-top: 1em;"><i class="material-icons">delete</i></a>
+    </div>
+  </div>
+  <ul class="collection">
+  {% for articulo in articulos %}
+    <li class="collection-item avatar">
+      <img src="/media/{{articulo.imagen}}" alt="" class="circle" style="height: 4.5em; width: 4.5em;">
+      <span class="title" style="margin-left: 1.5em;">{{articulo.titulo|title}}</span>
+      <p style="margin-left: 1.5em;">{{articulo.fecha}} </p>
+      <p style="margin-left: 1.5em;">  {% autoescape off %}{{articulo.contenido|truncatewords_html:8|removetags:"p b span h1 h2 h3 h4 h5"}}{% endautoescape %}</p>
+      <a id="toggle_{{articulo.pk}}" href="{% url 'ciapsse_web:articulo_editar' articulo.pk %}" class="secondary-content"  ><i class="material-icons amber-text text-accent-3"style="font-size: 3em;line-height: 0.6em; margin-right: 0.3em;">create</i></a>
+    </li>
+  {% endfor %}
+  </ul>
+  
+    
+  </div>
+</div>
+<!--###########################    /TAB ARTICULOS   ########################### -->
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+      var borrar = false;
+      
+      $('#toggle_borrar').click(function(){
+           if (borrar == true ){
+               borrar = false;
+               {% for articulo in articulos %}
+               $('#toggle_{{articulo.pk}}').html('<a id="toggle_{{articulo.pk}}" href="{% url 'ciapsse_web:articulo_editar' articulo.pk %}" class="secondary-content"  ><i class="material-icons amber-text text-accent-3"style="font-size: 3em;line-height: 0px">create</i></a>');
+               {% endfor %}
+           }
+           else{
+               borrar = true;
+               {% for articulo in articulos %}
+               $('#toggle_{{articulo.pk}}').html('<a id="toggle_{{articulo.pk}}" href="{% url 'ciapsse_web:articulo_desactivar' articulo.pk %}" class="secondary-content"  ><i class="material-icons amber-text text-accent-3" style="font-size: 3em;line-height: 0px;">close</i></a>');
+               {% endfor %}
+           }
+           
+           
+      })
+</script>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% load staticfiles %}
+
+<!-- ###########################    ESTANDARES DE COMENTARIOS   ########################### -->
+<!-- PARA LOS COMENTARIOS SE USARA LA SIGUIENTE ESTANDARIZACION: -->
+
+	<!--###########################    SECCION   ########################### -->
+	<!-- DE LAS SIGUIENTE FORMA SE SEÑALIZARAN LAS DISTINTAS SECCIONES DEL TEMPLATE,
+	ENCERRANDOLAS CON UN COMENTARIO INDICANDO EL NOMBRE DE DICHA SECCION DEL TEMPLATE 
+	RESALTADA CON NUMERALES (#), AGREGANDO UN COMENTARIO DEBAJO PROPORCIONANDO INFORMACION 
+	REFERENTE A ESTA SECCION SI ES NECESARIO Y LUEGO AL FINAL DE DICHA SECCION
+	SE LA CERRARA DE LA SIGUIENTE FORMA -->
+	<!--###########################    /SECCION   ########################### -->
+
+<!-- TODOS LOS COMENTARIOS SERAN ESCRITOS EN MAYUSCULAS PARA SU FACIL LECTURA Y DIFERENCIACION -->
+<!-- ###########################    /ESTANDARES DE COMENTARIOS   ########################### -->
+
+
+<!DOCTYPE html>
+<html>
+	<!--###########################    HEAD   ########################### -->
+    <head>
+      	<!--Import Google Icon Font-->
+      	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      	<!--Import materialize.css-->
+      	<link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
+      	<!--Let browser know website is optimized for mobile-->
+      	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="utf-8">
+		
+		{% block importes %}{% endblock %}
+		<link rel="shortcut icon" href="{% static 'images/ciapsse/ciapsse_logo.png' %}" />
+		<title>CIAPSSE</title>
+    </head>
+	<!--###########################    /HEAD   ########################### -->
+    <body>
+	<!--###########################    BODY   ########################### -->
+		<!--###########################    NAVBAR   ########################### -->
+		{% include "_plantillas/_nav_bar.html" %}
+		<!--###########################    /NAVBAR   ########################### -->
+		<!--###########################    MAIN   ########################### -->
+		<main>
+			
+			<div class="parallax-container" style="height: 20em";>
+				<center><img src="{% static 'images/ciapsse/ciapsse_logo.png' %}" style="height: 15em; margin: 2em;"></center>
+				<div class="parallax"><img src="{% static 'images/ciapsse/1.jpg' %}"></div>
+			</div>
+			<!--###########################    BLOCK BODY   ########################### -->
+			<!-- BLOQUE CON EL CONTENIDO PRINCIPAL DE LA PAGINA RENDERIZADO CON DJANGO -->
+			{% block body %}{% endblock %}
+			<!--###########################    /BLOCK BODY   ########################### -->
+			<div class="parallax-container">
+				<center><img src="{% static 'images/ciapsse/ciapsse_logo.png' %}" style="height: 17em; margin: 6em;"></center>
+				<div class="parallax"><img src="{% static 'images/ciapsse/2.jpg' %}"></div>
+			</div>
+			
+		
+		</main>
+		<!--###########################    /MAIN   ########################### -->
+		<!--###########################    FOOTER   ########################### -->
+		{% include "_plantillas/_footer.html" %}
+		<!--###########################    /FOOTER   ########################### -->
+		<!--###########################    SCRIPTS   ########################### -->
+		<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+      	<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+		{% block scripts %}{% endblock %}
+		<script>
+			// FUNCION PARA EL FUNCIONAMIENTO DE PARALLAX 
+			$(document).ready(function(){
+				$('.slider').slider({full_width: true});
+				$('.parallax').parallax();
+			});
+			// FUNCION PARA EL FUNCIONAMIENTO DE LA NAVBAR EN DISPOSITIVOS MOVILES
+			$(".button-collapse").sideNav();
+			
+			$(document).ready(function(){
+				$('.pagination').tabs();
+			});
+		</script>
+		<!--###########################    /SCRIPTS   ########################### -->
+    </body>
+	<!--###########################    /BODY   ########################### -->
+</html>

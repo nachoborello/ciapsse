@@ -1,0 +1,18 @@
+{% load staticfiles %}
+
+<nav class="blue">
+	<div class="nav-wrapper  container">
+	<a href="{% url 'ciapsse_web:home' %}" class="brand-logo">CIAPSSE</a>
+	<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	<ul class="right hide-on-med-and-down">
+		<li><a href="{% url 'ciapsse_web:quienes_somos' %}">Quienes Somos</a></li>
+		<li><a href="preguntas.html">Preguntas Frecuentes</a></li>
+		<li><a href="Informacion.html">Infromate</a></li>
+	</ul>
+	<ul class="side-nav" id="mobile-demo">
+		<li><a href="{% url 'ciapsse_web:quienes_somos' %}">Quienes Somos</a></li>
+		<li><a href="preguntas.html">Preguntas Frecuentes</a></li>
+		<li><a href="Informacion.html">Infromate</a></li>
+	</ul>
+	</div>
+</nav>

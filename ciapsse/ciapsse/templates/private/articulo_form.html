@@ -1,0 +1,107 @@
+{% extends '_plantillas/_base.html' %}
+
+{% load staticfiles %}
+
+
+
+{% block importes %}
+  <!-- Include Font Awesome. -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Include Editor style. -->
+  <link href="{% static 'froala_editor_2.0.1/css/froala_editor.min.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'froala_editor_2.0.1/css/froala_style.min.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Include Editor Plugins style. -->
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/char_counter.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/code_view.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/colors.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/emoticons.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/fullscreen.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/line_breaker.css' %}">
+  <link rel="stylesheet" href="{% static 'froala_editor_2.0.1/css/plugins/table.css' %}">
+
+{% endblock %}
+
+{% block body %}
+<div class="container row">
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="row">
+      <h4>Datos del Articulo</h4>
+        <div class="input-field col s12 m5">
+            <input name="titulo" id="titulo" type="text" class="validate" value="{{articulo.titulo}}">
+            <label for="titulo">Titulo</label>
+        </div>
+        
+        <div class="file-field input-field col s12 m5 offset-m2">
+          <div class="btn">
+            <span>Imagen</span>
+            <input type="file" name="imagen" accept=".jpeg, .jpg, .png">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>  
+    </div>
+    <div class="divider"></div>
+    <h4>Contenido del Articulo</h4>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea id="edit" name="contenido">{{articulo.contenido}}</textarea>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <br>
+    <div class="row">
+        <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Guardar
+          <i class="material-icons right">save</i>
+        </button>
+    </div>
+  </form>
+</div>
+{% endblock %}  
+ 
+{% block scripts %}
+  <!-- Include jQuery. -->
+
+  <!-- Include JS files. -->
+  <script src="{% static 'froala_editor_2.0.1/js/froala_editor.min.js' %}"></script>
+
+  <!-- Include Plugins. -->
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/align.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/char_counter.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/code_view.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/colors.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/emoticons.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/entities.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/font_family.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/font_size.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/fullscreen.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/inline_style.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/line_breaker.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/link.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/lists.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/paragraph_format.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/paragraph_style.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/quote.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/table.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/save.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/plugins/url.min.js' %}"></script>
+
+  <!-- Include Language file if we'll use it. -->
+  <script type="text/javascript" src="{% static 'froala_editor_2.0.1/js/languages/es.js' %}"></script>
+
+  <!-- Initialize the editor. -->
+  <script>
+      $(function() {
+          $('#edit').froalaEditor({
+            language: 'es',
+            heightMin: 300,
+            heightMax: 300
+            })
+      });
+  </script>
+ {% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+{% extends "_plantillas/_base.html" %}
+
+{% load staticfiles %}
+
+{% block body %}
+
+
+	
+	<div class="row container">
+	<h3>Que es CIAPSSE:</h3>
+	<div class="col s12">{% autoescape off %}{{contenido_general.main_quienes_somos}}{% endautoescape %}</div>
+</div>
+<div class="divider"></div>
+<div class="row container"> 
+	<h3>Integrantes:</h3>
+	{% for int in integrantes %}
+	<div class="col s12 m6" >
+		<div class="card">
+		<div class="card-image waves-effect waves-block waves-light">
+			<img class="activator" src="/media/{{int.foto}}" >
+		</div>
+		<div class="card-content">
+			<span class="card-title grey-text text-darken-4">{{int.prefijo}} {{int.nombre}} {{int.apellido}}</span>
+			<p><a class="activator">Detalles</a></p>
+		</div>
+			<div class="card-reveal">
+			<span class="card-title grey-text text-darken-4">{{int.prefijo}} {{int.nombre}} {{int.apellido}}<i class="material-icons right">close</i></span>
+			<p>{{int.cv}}</p>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
